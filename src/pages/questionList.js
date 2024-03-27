@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Grid from "../components/ui/grid"
 import SideBarGrid from "../components/ui/sidebar_grid"
 import nanoId from "nano-id";
-import RenderHTML from "../components/ui/renderHTML";
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 // import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
@@ -27,6 +26,8 @@ const data = [
     }
 ]
 
+let questionTags = ['Python', 'Azure', 'AWS', 'Database', 'Javascript', 'Go', 'CSS', 'HTML', 'Django', 'PHP']
+
 export default function QuestionList() {
     const [question, setQuestion] = useState({
         'title': '',
@@ -40,12 +41,22 @@ export default function QuestionList() {
         setQuestion(prevQuestions => {
             const {name, value} = event.target
             const prevTag = prevQuestions.tag
+            
+            // Helps to avoid duplicates from the tag array.
+            if (name === 'tag' && prevTag.includes(value.charAt(0).toUpperCase() + value.slice(1))){
+                return {...prevQuestions} 
+            }
 
-            console.log(event);
-
-            if (name == 'tag' && prevTag.includes(value)){
+            // Allows for only tags in the questionTag to be selected.
+            if (name === 'tag' && !questionTags.includes(value)){
+                if (event.nativeEvent.data === ' '){
+                    questionTags.push(value.trimEnd()) // remove the space from the end of the value.
+                    // Eliminate duplicate tags from the array
+                    questionTags = questionTags.filter((tag, index) => questionTags.indexOf(tag) === index)
+                }
                 return {...prevQuestions}
             }
+            
             return {
                 ...prevQuestions,
                 [name]: name === 'tag' ? [...prevTag, value] : value
@@ -56,22 +67,24 @@ export default function QuestionList() {
 
     function sumbitQuestion(event){
         event.preventDefault()
-        console.log(question);
+        // console.log(question);
     }
 
-    function removeTag(tag){
-        setQuestion(prevQuestions => {
-            print(prevQuestions.tag)
-            return
-        })
-    }
-
-    const tags = question.tag.map(tag => {
+    const tags = question.tag.map((tag, index) => {
         return (
             <span key={nanoId()} className="btn btn-light p-1 mx-1">
                 {tag} &nbsp; &nbsp;
-                <i class="fa fa-times" aria-hidden="true" onClick={removeTag(tag)}></i>
+                <i class="fa fa-times" aria-hidden="true" onClick={()=>{
+                    setQuestion(prevQuestions => {
+                        prevQuestions.tag.splice(index, 1)
+                        return {...prevQuestions}
+                    })
+                }}></i>
             </span>)
+    })
+
+    const tagOptions = questionTags.map(option => {
+        return (<option value={option}></option>)
     })
 
     return (
@@ -82,7 +95,6 @@ export default function QuestionList() {
                 </div>
                 <div className="col-md-6 card p-3 border-0 mb-5">
                     <h3>Submit a Question</h3>
-                    <RenderHTML htmlContent={question.body}/>
                     <form className="card border-0" onSubmit={sumbitQuestion}>
                         <label htmlFor="title">Title:</label>
                         <input 
@@ -128,21 +140,11 @@ export default function QuestionList() {
                             id="tag" 
                             name="tag"
                             onChange={handleFormChange}
-                            value=""
                         ></input>
                         <datalist id="tags" onSelect={handleFormChange}>
-                            <option value={"Python"}></option>
-                            <option value={"HTML"}></option>
-                            <option value={"CSS"}></option>
-                            <option value={"PHP"}></option>
-                            <option value={"MySQL"}></option>
-                            <option value={"Javascript"}></option>
-                            <option value={"Django"}></option>
-                            <option value={"Database"}></option>
-                            <option value={"React"}></option>
-                            <option value={"Flutter"}></option>
-                            <option value={"Ionic"}></option>
+                            {tagOptions}
                         </datalist>
+                        <p className="text-muted"><i className="fa fa-info-circle"></i> To add a new tag end it with a space.</p>
                         <button className="btn btn-block btn-success mt-3">Submit</button>
                     </form>
                 </div>
