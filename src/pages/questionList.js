@@ -115,10 +115,15 @@ export default function QuestionList() {
                             //     plugins: [ CodeBlock ],
                             //     toolbar: ['heading', '|', 'codeBlock', '|', 'undo', 'redo'],
                             // } }
-                            // onReady={ editor => {
-                            //     // You can store the "editor" and use when it is needed.
-                            //     console.log( 'Editor is ready to use!', editor );
-                            // } }
+                            onReady={(editor) => {
+                                editor.editing.view.change((writer) => {
+                                writer.setStyle(
+                                    "height",
+                                    "200px",
+                                    editor.editing.view.document.getRoot()
+                                );
+                                });
+                            }}
                             onChange={ ( event, editor ) => {
                                 console.log( editor.getData() );
                                 setQuestion(prevQuestions => {
