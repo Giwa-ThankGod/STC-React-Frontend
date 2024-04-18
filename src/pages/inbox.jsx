@@ -1,13 +1,36 @@
-import React from "react";
+import React,{useState} from "react";
 import Assignment from "../components/ui/Assignment";
 import { data } from "./questionList";
 import Grid from "../components/ui/grid";
 import { Link } from "react-router-dom";
 function inbox() {
+  const [showmodal, setShowmodal]=useState(false)
+
+  // const handelModal=()=>{
+  //   setShowmodal(!showmodal)
+  // }
+  // console.log(showmodal);
+  
   return (
     <>
-      <Assignment />
       <div className="container ">
+        {/* <button
+          type="submit"
+          className="btn btn-warning align-item-end  "
+          // onClick={() => {
+          //   handelModal()
+          // }}
+        >
+        
+          create project call
+        </button> */}
+
+      
+
+<Assignment isTutor={true}/>
+        {/* {showmodal?(
+           
+          ):""} */}
         <p className="h5 mt-3 ">notifications</p>
         <div className="row ">
           <div className="col-md-6 card border-none ">

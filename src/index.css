@@ -118,7 +118,9 @@ input {
 .dnm li {
   cursor: pointer;
 }
-
+.textarea-height {
+  height: 150px;
+}
 @keyframes fadeInUp {
   0% {
     opacity: 0;
@@ -129,3 +131,7 @@ input {
     transform: translateY(0);
   }
 }
+.ck-editor__editable[role="textbox"] {
+  min-height: 200px;
+}
+

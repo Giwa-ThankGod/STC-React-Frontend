@@ -10,7 +10,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 export const data = [
   {
-    id: 1,
+    id: 1,  
     title: "Template does not exist error in python django website.",
     description:
       "I have my templates folder and my hmtl file already, but the template is not displaying.",
@@ -58,7 +58,7 @@ export default function QuestionList() {
     tag: [],
   });
 
-  // console.log(question.tag);
+  console.log(question.tag);
 
   function handleFormChange(event) {
     setQuestion((prevQuestions) => {
@@ -92,9 +92,9 @@ export default function QuestionList() {
     });
   }
 
-  function sumbitQuestion(event) {
+  function sumbitQuestion(event) {  
     event.preventDefault();
-    // console.log(question);
+    console.log(question);
   }
 
   const tags = question.tag.map((tag, index) => {
@@ -175,7 +175,7 @@ export default function QuestionList() {
             ></input>
             <datalist id="tags" onSelect={handleFormChange}>
               {tagOptions}
-            </datalist>
+            </datalist> 
             <p className="text-muted">
               <i className="fa fa-info-circle"></i> To add a new tag end it with
               a space.
@@ -190,37 +190,3 @@ export default function QuestionList() {
     </div>
   );
 }
-
-// ====== code for the side nav bar
-
-// .sidebar {
-//   position: fixed;
-//   top: 51px;
-//   bottom: 0;
-//   left: 0;
-//   z-index: 1000;
-//   display: block;
-//   padding: 20px;
-//   overflow-x: hidden;
-//   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-//   background-color: #f5f5f5;
-//   border-right: 1px solid #eee;
-//   }
-/* <div class="container-fluid"> */
-
-//   <div class="row">
-//   <div class="col-sm-3 col-md-2 sidebar">
-//   <ul class="nav nav-sidebar">
-//       <li class="active"><a href="#">Overview</a></li>
-//       <li><a href="#">Reports</a></li>
-//       <li><a href="#">Analytics</a></li>
-//       <li><a href="#">Export</a></li>
-//   </ul>
-//   </div>
-//   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-//   <h1 class="page-header">Dashboard</h1>
-//   ...
-
-//   </div>
-//   </div>
-//   </div>

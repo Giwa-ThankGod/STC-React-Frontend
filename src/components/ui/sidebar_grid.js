@@ -32,17 +32,11 @@ export default function SideBarGrid(props) {
             </p>
 
            
-            <small /*className="d-flex justify-content-center align-item-center text-dark"*/
+            <small 
             >
               tags :{item.tag}
             </small>
-            {/* <a href="" className="post-tag flex--item mt0 pt-0 ">
-              php
-            </a> */}
-            {/* <div className="d-flex justify-content-between align-item-center mt-2">
-              <p className="btn btn-sm btn-dark">Downvote</p>
-              <p className="btn btn-sm btn-light mx-3">Upvote</p>
-            </div> */}
+      \
           </div>
         </div>
       </div>
