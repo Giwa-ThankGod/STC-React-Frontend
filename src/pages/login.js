@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
+import {
+    BrowserRouter as Router, 
+    Route, Routes
+} from "react-router-dom";
 
 export default function Login(){
-    const [login, setLogin] = useState({'username': '', 'password': ''})
+    const [loginForm, setLoginForm] = useState({'username': '', 'password': ''})
+    const [formSubmitted, setFormSubmitted] = useState(false);
 
     function passwordValidator(password){
         if (''.match()){
@@ -10,7 +15,7 @@ export default function Login(){
     }
 
     function handleFormChange(event){
-        setLogin(prevCredentials => {
+        setLoginForm(prevCredentials => {
             const {name, value} = event.target
         
             if (name == 'password'){
@@ -25,12 +30,20 @@ export default function Login(){
 
     function submitForm(event){
         event.preventDefault()
-        console.log(login);
+        setFormSubmitted(true);
     }
 
     useEffect(()=>{
-        console.log('Ran Effect');
-    }, [])
+        const url = 'http://127.0.0.1:5000/token'
+        const headers = { 'Authorization': 'Basic ' + btoa(loginForm.username + ":" + loginForm.password)}
+    
+        fetch(url, {method: 'GET', headers: headers})
+            .then(response => response.json())
+            .then(data => {
+                localStorage.setItem('token',data.token);
+                
+            })
+    }, [formSubmitted])
 
     return (
         <>
@@ -46,7 +59,7 @@ export default function Login(){
                             id="username" 
                             name="username"
                             onChange={handleFormChange}
-                            value={login.username}
+                            value={loginForm.username}
                         ></input>
 
                         <label htmlFor="title">Password:</label>
@@ -56,7 +69,7 @@ export default function Login(){
                             id="password" 
                             name="password" 
                             onChange={handleFormChange}
-                            value={login.password}
+                            value={loginForm.password}
                         ></input>
                         <button className="btn btn-block btn-warning mt-3">Login</button>
                     </form>
