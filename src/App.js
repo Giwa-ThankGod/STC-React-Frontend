@@ -7,6 +7,7 @@ import ArticleList from "./pages/articleList";
 import Navbar from "./components/ui/navbar";
 import Footer from "./components/ui/Footer";
 import QuestionDetails from "./pages/QuestionDetails ";
+import Assign_details from "./components/ui/Assign_details";
 import inbox from "./pages/inbox";
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/login" Component={Login} />
           <Route path="/inbox" Component={inbox} />
           <Route path="/QuestionDetails" Component={QuestionDetails} />
+          <Route path="/Assign_details/:projectId" Component={Assign_details} />
         </Routes>
       </Router>
 

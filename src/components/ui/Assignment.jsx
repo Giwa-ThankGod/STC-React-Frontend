@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import { Link, Outlet } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+export const Project=[]
 function Assignment() {
   const [ProjectData, setProjectData] = useState({
     projectName: "",
@@ -9,12 +10,13 @@ function Assignment() {
     tagStudent: [],
   });
   const [postedProjects, setPostedProjects] = useState([]);
-  const [completedProjects, setCompletedProjects] = useState([]);
+  // const [completedProjects, setCompletedProjects] = useState([]);
 
-  useEffect(() => {
+  useEffect(() => { 
     const storedProjects = localStorage.getItem("postedProjects");
     if (storedProjects) {
       setPostedProjects(JSON.parse(storedProjects));
+      // console.log(storedProjects);
     }
   }, []);
 
@@ -40,15 +42,18 @@ function Assignment() {
     };
     setPostedProjects([...postedProjects, newProject]);
     setProjectData({
-      projectName: "",
+      projectName: "john doe",
       projectDes: "",
       tagStudent: [],
     });
+    
   };
 
   const toggleCompletion = (id) => {
     const updatedProjects = postedProjects.map((project) =>
-      project.id === id ? { ...project, completed: !project.completed } : project
+      project.id === id
+        ? { ...project, completed: !project.completed }
+        : project
     );
     setPostedProjects(updatedProjects);
   };
@@ -59,26 +64,30 @@ function Assignment() {
     );
     setPostedProjects(updatedProjects);
   };
- 
-  const notify = () => toast.success('Posted!', {
-    position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
+
+  const notify = () =>
+    toast.success("Posted!", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
     });
 
+  //   useEffect(() => {
+  //     setPostedProjects(Project)
+  //     console.log(Project);
+  // }, [])
+  
   return (
     <>
       <div className="container mt-4">
+   
+        <ToastContainer />
 
-     
-        <ToastContainer 
-        />
- 
         <button
           type="button"
           className="btn btn-warning"
@@ -98,13 +107,22 @@ function Assignment() {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Create Project</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 className="modal-title" id="exampleModalLabel">
+                  Create Project
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
               </div>
               <div className="modal-body">
                 <form onSubmit={postProject}>
                   <div className="mb-3">
-                    <label htmlFor="projectName" className="form-label">Project Name</label>
+                    <label htmlFor="projectName" className="form-label">
+                      Project Name
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -115,7 +133,9 @@ function Assignment() {
                     />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="projectDes" className="form-label">Project Description</label>
+                    <label htmlFor="projectDes" className="form-label">
+                      Project Description
+                    </label>
                     <textarea
                       className="form-control"
                       id="projectDes"
@@ -124,7 +144,13 @@ function Assignment() {
                       onChange={handleInputChange}
                     ></textarea>
                   </div>
-                  <button type="submit" className="btn btn-success" onClick={notify}>Post Project</button>
+                  <button
+                    type="submit"
+                    className="btn btn-success"
+                    onClick={notify}
+                  >
+                    Post Project
+                  </button>
                 </form>
               </div>
             </div>
@@ -134,10 +160,22 @@ function Assignment() {
 
       <div className="row mt-4">
         {postedProjects.map((project) => (
-          <div key={project.id} className="col-md-4 mb-4">
-            <div className="card">
+          <div key={project.id} className="col-md-4 mb-4 ">
+            <div className="card bg-warning-subtle">
               <div className="card-body">
-                <h5 className="card-title">{project.projectName}</h5>
+                <Link to={`/Assign_details/${project.id}`}>
+                  <h5 className="card-title text-dark ">
+                    {project.projectName}
+                  </h5>
+                </Link>
+                <h6>
+                  {" "}
+                  referal code:{" "}
+                  <samp>
+                    <code> {project.id}</code>
+                  </samp>
+                </h6>
+
                 <p className="card-text">{project.projectDes}</p>
                 <button
                   onClick={() => toggleCompletion(project.id)} // Toggle completion status
@@ -146,7 +184,7 @@ function Assignment() {
                   }`}
                 >
                   {project.completed ? (
-                    <i className="fas fa-arrow-right"></i> // Arrow icon for completed projects
+                    <i class="fa-solid fa-check"></i> // Arrow icon for completed projects
                   ) : (
                     "Completed"
                   )}
@@ -162,6 +200,7 @@ function Assignment() {
           </div>
         ))}
       </div>
+      <Outlet />
     </>
   );
 }

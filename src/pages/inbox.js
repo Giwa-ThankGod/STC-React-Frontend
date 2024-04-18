@@ -14,20 +14,8 @@ function inbox() {
   return (
     <>
       <div className="container ">
-        {/* <button
-          type="submit"
-          className="btn btn-warning align-item-end  "
-          // onClick={() => {
-          //   handelModal()
-          // }}
-        >
-        
-          create project call
-        </button> */}
-
-      
-
-<Assignment isTutor={true}/>
+     
+<Assignment />
         {/* {showmodal?(
            
           ):""} */}
