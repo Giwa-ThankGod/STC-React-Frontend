@@ -183,78 +183,9 @@ export default function QuestionList() {
             <button className="btn btn-block btn-success mt-3">Submit</button>
           </form>
         </div>
-        <div className="col-md-12">
-          <Grid key={nanoId()} header="Top Questions" data={data} />
-        <div className="container mt-5">
-            <div className="row">
-                <div className="col-md-6">
-                    <SideBarGrid key={nanoId()} header="Recent Questions" data={data}/>
-                </div>
-                <div className="col-md-6 card p-3 border-0 mb-5">
-                    <h3>Submit a Question</h3>
-                    <form className="card border-0" onSubmit={sumbitQuestion}>
-                        <label htmlFor="title">Title:</label>
-                        <input 
-                            className="form-control mb-2" 
-                            type="text" 
-                            id="title" 
-                            name="title" 
-                            onChange={handleFormChange}
-                            value={question.title}
-                        ></input>
-
-                        <label htmlFor="title">Body:</label>
-
-                        <CKEditor
-                            editor={ ClassicEditor }
-                            data={question.body}
-                            // config={ {
-                            //     plugins: [ CodeBlock ],
-                            //     toolbar: ['heading', '|', 'codeBlock', '|', 'undo', 'redo'],
-                            // } }
-                            onReady={(editor) => {
-                                editor.editing.view.change((writer) => {
-                                writer.setStyle(
-                                    "height",
-                                    "200px",
-                                    editor.editing.view.document.getRoot()
-                                );
-                                });
-                            }}
-                            onChange={ ( event, editor ) => {
-                                console.log( editor.getData() );
-                                setQuestion(prevQuestions => {
-                                    return {
-                                        ...prevQuestions,
-                                        'body': editor.getData()
-                                    }
-                                })
-                            } }
-                        />
-
-                        <label htmlFor="title" className="my-3">Tags:</label>
-                        <div>
-                            {tags}
-                        </div>
-                        <input
-                            className="form-control my-2" 
-                            list="tags" 
-                            id="tag" 
-                            name="tag"
-                            onChange={handleFormChange}
-                        ></input>
-                        <datalist id="tags" onSelect={handleFormChange}>
-                            {tagOptions}
-                        </datalist>
-                        <p className="text-muted"><i className="fa fa-info-circle"></i> To add a new tag end it with a space.</p>
-                        <button className="btn btn-block btn-success mt-3">Submit</button>
-                    </form>
-                </div>
-                <div className="col-md-12">
-                    <Grid key={nanoId()} header="Questions" data={data}/>
-                </div>
-            </div>
-        </div>
+      </div>
+      <div className="col-md-12">
+        <Grid key={nanoId()} header="Questions" data={data}/>
       </div>
     </div>
   );
