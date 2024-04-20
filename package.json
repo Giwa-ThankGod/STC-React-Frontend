@@ -35,6 +35,7 @@
     "@ckeditor/ckeditor5-react": "^6.2.0",
     "bootstrap": "^5.3.3",
     "dompurify": "^3.0.9",
+    "jquery": "^3.7.1",
     "nano-id": "^1.1.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
